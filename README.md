@@ -1,6 +1,6 @@
 # MyReads Project
 
-This is the final assessment project for Udacity's React Fundamentals course.
+This is the assessment project for Udacity's React Fundamentals course. This project allows user to select and search for a book and update its status to currently reading, want to read and Read.
 
 ## TL;DR
 
