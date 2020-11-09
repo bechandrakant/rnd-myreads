@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import BookList from "./BookList"
 import * as BooksAPI from '.././api/BooksAPI'
 
-const SearchBooks = ({ onChange }) => {
+const SearchBooks = ({ books, onChange }) => {
   const [matchingBooks, setMatchingBooks] = useState(null)
   const [query, setQuery] = useState("")
 
@@ -17,9 +17,15 @@ const SearchBooks = ({ onChange }) => {
       setMatchingBooks(null)
     }
     else {
-      BooksAPI.search(query).then(books => {
-        if (books.length > 0) {
-          setMatchingBooks(books)
+      BooksAPI.search(query).then(searchedBooks => {
+        if (searchedBooks.length > 0) {
+          searchedBooks.forEach(searchBook => {
+            const filteredBook = books.filter(book => book.id === searchBook.id)
+            if (filteredBook.length) {
+              searchBook.shelf = filteredBook[0].shelf
+            }
+          })
+          setMatchingBooks(searchedBooks)
         } else {
           setMatchingBooks(null)
         }
