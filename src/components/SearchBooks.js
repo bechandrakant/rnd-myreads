@@ -1,7 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom"
+import BookList from "./BookList"
+import * as BooksAPI from '.././api/BooksAPI'
 
-const SearchBooks = () => {
+const SearchBooks = ({ onChange }) => {
+  const [matchingBooks, setMatchingBooks] = useState(null)
+  const [query, setQuery] = useState("")
+
+  const handleChange = (e) => {
+    setQuery(e.target.value)
+    searchBooks(e.target.value)
+  }
+
+  const searchBooks = (query) => {
+    if (query.length === 0) {
+      setMatchingBooks(null)
+    }
+    else {
+      BooksAPI.search(query).then(books => {
+        if (books.length > 0) {
+          setMatchingBooks(books)
+        } else {
+          setMatchingBooks(null)
+        }
+      })
+    }
+  }
+
   return (
     <div className="search-books">
     <div className="search-books-bar">
@@ -17,12 +42,21 @@ const SearchBooks = () => {
           However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
           you don't find a specific author or title. Every search is limited by search terms.
         */}
-        <input type="text" placeholder="Search by title or author"/>
-
+        <input 
+          type="text" 
+          placeholder="Search by title or author" 
+          value={query}
+          onChange={handleChange} />
       </div>
     </div>
     <div className="search-books-results">
-      <ol className="books-grid"></ol>
+      { matchingBooks ? 
+        <ol className="books-grid">
+          <BookList 
+            books={matchingBooks}
+            onChange={onChange}
+            />
+        </ol> : <h4>No matching results found!</h4>}
     </div>
   </div>
   )
