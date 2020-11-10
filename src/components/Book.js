@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Book = ({ bookData, onChange }) => {
 
+  const [currentShelf, setCurrentShelf] = useState(bookData.shelf)
+
   const updateBookShelf = (e) => {
+    setCurrentShelf(e.target.value)
     onChange(bookData, e.target.value)
   }
 
@@ -17,7 +20,7 @@ const Book = ({ bookData, onChange }) => {
         <div className="book-top">
           <div className="book-cover" style={{ width: 150, height: 200, backgroundImage: `url(${thumbnail})` }}></div>
           <div className="book-shelf-changer">
-            <select onChange={updateBookShelf} value={bookData.shelf}>
+            <select onChange={updateBookShelf} value={currentShelf ? currentShelf: "none"}>
               <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
