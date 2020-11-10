@@ -1,12 +1,20 @@
 import React from 'react'
-import BookShelf from "./BookShelf";
+import BookShelf from "./BookShelf"
 import { Link } from "react-router-dom"
+import { SHELVES } from "./constants/constant"
 
 const BookReadsHome = ({ books, onChange }) => {
 
-  const currentlyReadingBooks = books.filter(book => book.shelf === "currentlyReading")
-  const wantToReadBooks = books.filter(book => book.shelf === "wantToRead")
-  const readBooks = books.filter(book => book.shelf === "read")
+  const bookShelves = SHELVES.map((shelf, index) => {
+    const bookList = books.filter(book => book.shelf === shelf.id)
+    return (
+      <BookShelf 
+        key={index}
+        title={shelf.title}
+        books={bookList}
+        onChange={onChange}
+      />)
+  })
 
   return (   
     <div className="list-books">
@@ -15,21 +23,7 @@ const BookReadsHome = ({ books, onChange }) => {
     </div>
     <div className="list-books-content">
       <div>
-        <BookShelf 
-          title="Currently Reading"
-          books={currentlyReadingBooks}
-          onChange={onChange}
-        />
-        <BookShelf 
-          title="Want To Read"
-          books={wantToReadBooks}
-          onChange={onChange}
-        />
-        <BookShelf 
-          title="Read"
-          books={readBooks}
-          onChange={onChange}
-        />
+        { bookShelves }
       </div>
     </div>
     <Link to="/search">
