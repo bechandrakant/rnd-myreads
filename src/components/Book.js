@@ -9,10 +9,10 @@ const Book = ({ bookData, onChange }) => {
     onChange(bookData, e.target.value)
   }
 
-  const thumbnail = 
-      bookData && bookData.imageLinks && bookData.imageLinks.thumbnail
-      ? bookData.imageLinks.thumbnail
-      : "https://upload.wikimedia.org/wikipedia/commons/4/47/Comic_image_missing.png"
+  const thumbnail = bookData?.imageLinks?.thumbnail ?? 
+      "https://upload.wikimedia.org/wikipedia/commons/4/47/Comic_image_missing.png"
+  
+  const title = bookData?.title ?? "No title Found"
 
   return (
     <li>
@@ -20,7 +20,7 @@ const Book = ({ bookData, onChange }) => {
         <div className="book-top">
           <div className="book-cover" style={{ width: 150, height: 200, backgroundImage: `url(${thumbnail})` }}></div>
           <div className="book-shelf-changer">
-            <select onChange={updateBookShelf} value={currentShelf ? currentShelf: "none"}>
+            <select onChange={updateBookShelf} value={currentShelf || "none"}>
               <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
@@ -29,8 +29,8 @@ const Book = ({ bookData, onChange }) => {
             </select>
           </div>
         </div>
-        <div className="book-title">{bookData.title}</div>
-        <div className="book-authors">{bookData.authors}</div>
+        <div className="book-title">{title}</div>
+        <div className="book-authors">{bookData?.authors?.join(', ')}</div>
       </div>
     </li>
           
