@@ -32,9 +32,11 @@ const BookReadsHome = ({ books, onChange }) => {
         />
       </div>
     </div>
-    <div className="open-search">
-      <Link to="/search"><button>Add a book</button></Link>  
-    </div>
+    <Link to="/search">
+      <div className="open-search">
+        Add a book 
+      </div>
+    </Link> 
   </div>
   )
 }

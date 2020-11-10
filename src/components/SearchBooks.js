@@ -36,9 +36,9 @@ const SearchBooks = ({ books, onChange }) => {
   return (
     <div className="search-books">
     <div className="search-books-bar">
-      <div className="close-search">
-        <Link to="/"><button>Close</button></Link>  
-      </div>
+      <Link to="/">
+        <div className="close-search">Close</div>
+      </Link>
       <div className="search-books-input-wrapper">
         {/*
           NOTES: The search from BooksAPI is limited to a particular set of search terms.
